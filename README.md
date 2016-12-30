@@ -9,3 +9,8 @@ Image available from:
 * [**Docker Hub**](https://hub.docker.com/r/galexrt/vlc)
 
 VLC Media Player in a Docker container.
+
+## Run the image
+```
+docker run -d galexrt/vlc:latest YOUR_SOUT_STRING
+```
