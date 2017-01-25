@@ -10,7 +10,18 @@ Image available from:
 
 VLC Media Player in a Docker container.
 
-## Run the image
+## Usage
+### Pulling the image
+From Quay.io:
 ```
-docker run -d galexrt/vlc:latest YOUR_SOUT_STRING
+docker pull quay.io/galexrt/vlc:latest
+```
+Or From Docker Hub:
+```
+docker pull galexrt/vlc:latest
+```
+
+### Run the image
+```
+docker run -d quay.io/galexrt/vlc:latest YOUR_VLC_SOUT_STRING
 ```
