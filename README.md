@@ -21,7 +21,7 @@ Or From Docker Hub:
 docker pull galexrt/vlc:latest
 ```
 
-### Run the image
+### Running the image
 ```
 docker run -d quay.io/galexrt/vlc:latest YOUR_VLC_SOUT_STRING
 ```
