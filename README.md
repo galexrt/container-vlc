@@ -12,6 +12,7 @@ VLC Media Player in a Docker container.
 
 ## Usage
 ### Pulling the image
+
 From Quay.io:
 ```
 docker pull quay.io/galexrt/vlc:latest
@@ -22,6 +23,7 @@ docker pull galexrt/vlc:latest
 ```
 
 ### Running the image
+
 ```
-docker run -d quay.io/galexrt/vlc:latest YOUR_VLC_SOUT_STRING
+docker run -d -v "$(pwd)":/data quay.io/galexrt/vlc:latest YOUR_VLC_SOUT_STRING
 ```
