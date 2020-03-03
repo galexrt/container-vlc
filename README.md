@@ -5,12 +5,14 @@
 [![Docker Repository on Quay.io](https://quay.io/repository/galexrt/vlc/status "Docker Repository on Quay.io")](https://quay.io/repository/galexrt/vlc)
 
 Image available from:
+
 * [**Quay.io**](https://quay.io/repository/galexrt/vlc)
 * [**Docker Hub**](https://hub.docker.com/r/galexrt/vlc)
 
 VLC Media Player in a Docker container.
 
 ## Usage
+
 ### Pulling the image
 
 From Quay.io:
