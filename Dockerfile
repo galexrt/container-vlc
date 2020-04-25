@@ -2,7 +2,11 @@ FROM fedora:31
 
 LABEL maintainer="Alexander Trost <galexrt@googlemail.com>"
 
-RUN useradd -m -d /data -s /bin/sh -u 1000 vlc && \
+ARG VLC_UID="1000"
+ARG VLC_GID="1000"
+
+RUN groupadd -g "$VLC_GID" vlc && \
+    useradd -m -d /data -s /bin/sh -u "$VLC_UID" -g "$VLC_GID" vlc && \
     dnf upgrade -y && \
     rpm -ivh "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-31.noarch.rpm" && \
     dnf upgrade -y && \
@@ -11,6 +15,7 @@ RUN useradd -m -d /data -s /bin/sh -u 1000 vlc && \
 
 USER "vlc"
 
+WORKDIR "/data"
 VOLUME ["/data"]
 
 ENTRYPOINT ["/usr/bin/vlc"]
