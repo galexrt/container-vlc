@@ -1,23 +1,32 @@
 # docker-vlc
 
-[![](https://images.microbadger.com/badges/image/galexrt/vlc.svg)](https://microbadger.com/images/galexrt/vlc "Get your own image badge on microbadger.com")
+[VLC Media Player](https://www.videolan.org/vlc/) in a Container Image.
 
-[![Docker Repository on Quay.io](https://quay.io/repository/galexrt/vlc/status "Docker Repository on Quay.io")](https://quay.io/repository/galexrt/vlc)
+Container Image available from:
 
-Image available from:
+* [Quay.io](https://quay.io/repository/galexrt/vlc)
+* [GHCR.io](https://github.com/users/galexrt/packages/container/package/vlc)
+* [**DEPRECATED** Docker Hub](https://hub.docker.com/r/galexrt/vlc)
+  * Docker Hub has been deprecated as of **06.09.2021**!
 
-* [**Quay.io**](https://quay.io/repository/galexrt/vlc)
-* [**Docker Hub**](https://hub.docker.com/r/galexrt/vlc)
+Container Image Tags:
 
-VLC Media Player in a Docker container.
+* `main` - Latest build of the `main` branch.
+* `YYYYmmdd-HHMMSS-NNN` - Latest build of the application with date of the build.
 
 ## Usage
 
 ### Running the image
 
 ```console
-docker run -d -v "$(pwd)":/data quay.io/galexrt/vlc:latest YOUR_VLC_FLAGS
+docker run \
+    --detach \
+    --volume "$(pwd)":/data \
+    quay.io/galexrt/vlc:latest \
+    YOUR_VLC_FLAGS
 ```
+
+The `--volume "$(pwd)":/data` will mount your current working directory to `/data` inside the container for shorter paths, though this might lead to confusion. Make sure to mount the right path into the container and then use the right path for your flags.
 
 For some simple examples, checkout the [VLC Examples](#vlc-examples) section below.
 
@@ -29,10 +38,10 @@ From Quay.io:
 docker pull quay.io/galexrt/vlc:latest
 ```
 
-Or From Docker Hub:
+Or from GHCR.io:
 
 ```console
-docker pull galexrt/vlc:latest
+docker pull ghcr.io/galexrt/vlc:latest
 ```
 
 ## VLC Examples
