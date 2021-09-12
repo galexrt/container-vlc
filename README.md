@@ -1,4 +1,4 @@
-# docker-vlc
+# container-vlc
 
 [VLC Media Player](https://www.videolan.org/vlc/) in a Container Image.
 
