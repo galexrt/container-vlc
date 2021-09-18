@@ -19,7 +19,8 @@ Container Image Tags:
 ### Running the image
 
 ```console
-docker run \
+docker \
+    run \
     --detach \
     --volume "$(pwd)":/data \
     quay.io/galexrt/vlc:latest \
