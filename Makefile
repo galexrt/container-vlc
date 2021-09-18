@@ -18,20 +18,20 @@ container-build:
 	docker build \
 		--build-arg BUILD_DATE="$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')" \
 		--build-arg VCS_REF="$(shell git rev-parse HEAD)" \
-		-t ghcr.io/galexrt/ts3server:$(VERSION) \
+		-t ghcr.io/galexrt/vlc:$(VERSION) \
 		.
-	docker tag ghcr.io/galexrt/ts3server:$(VERSION) quay.io/galexrt/ts3server:$(VERSION)
+	docker tag ghcr.io/galexrt/vlc:$(VERSION) quay.io/galexrt/vlc:$(VERSION)
 
 	if [ "$(VERSION)" != "$(VERSION_SHORT)" ]; then \
-		docker tag ghcr.io/galexrt/ts3server:$(VERSION) ghcr.io/galexrt/ts3server:$(VERSION_SHORT); \
-		docker tag ghcr.io/galexrt/ts3server:$(VERSION) quay.io/galexrt/ts3server:$(VERSION_SHORT); \
+		docker tag ghcr.io/galexrt/vlc:$(VERSION) ghcr.io/galexrt/vlc:$(VERSION_SHORT); \
+		docker tag ghcr.io/galexrt/vlc:$(VERSION) quay.io/galexrt/vlc:$(VERSION_SHORT); \
 	fi
 
 container-push:
-	docker push ghcr.io/galexrt/ts3server:$(VERSION)
-	docker push quay.io/galexrt/ts3server:$(VERSION)
+	docker push ghcr.io/galexrt/vlc:$(VERSION)
+	docker push quay.io/galexrt/vlc:$(VERSION)
 
 	if [ "$(VERSION)" != "$(VERSION_SHORT)" ]; then \
-		docker push ghcr.io/galexrt/ts3server:$(VERSION_SHORT); \
-		docker push quay.io/galexrt/ts3server:$(VERSION_SHORT); \
+		docker push ghcr.io/galexrt/vlc:$(VERSION_SHORT); \
+		docker push quay.io/galexrt/vlc:$(VERSION_SHORT); \
 	fi
