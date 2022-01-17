@@ -6,6 +6,8 @@ ARG REVISION="N/A"
 ARG VLC_UID="1000"
 ARG VLC_GID="1000"
 
+ENV HOME="/data"
+
 LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>" \
     org.opencontainers.image.created="${BUILD_DATE}" \
     org.opencontainers.image.title="galexrt/container-vlc" \

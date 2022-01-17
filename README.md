@@ -23,11 +23,14 @@ docker \
     run \
     --detach \
     --volume "$(pwd)":/data \
+    --user $(id -u):$(id -g) \
     quay.io/galexrt/vlc:latest \
     YOUR_VLC_FLAGS
 ```
 
 The `--volume "$(pwd)":/data` will mount your current working directory to `/data` inside the container for shorter paths, though this might lead to confusion. Make sure to mount the right path into the container and then use the right path for your flags.
+
+**NOTE**: If you point to a different directory inside the container than `/data` you need to add `-e HOME=__YOUR_DIRECTORY__` to the `docker run` command.
 
 For some simple examples, checkout the [VLC Examples](#vlc-examples) section below.
 
@@ -62,7 +65,14 @@ Using VLC to connect to the stream on the container / server IP on port `8080/tc
 This will start a RTSP stream on port `8554/udp`.
 
 ```console
-docker run -d -v "$(pwd)":/data -p 8554:8554/udp quay.io/galexrt/vlc:latest file:///data/your-video-file.mp4 --sout '#transcode{scodec=none}:rtp{sdp=rtsp://:8554/}'
+docker \
+    run \
+    --detach \
+    --volume "$(pwd)":/data \
+    --user $(id -u):$(id -g) \
+    --publish 8554:8554/udp \
+    quay.io/galexrt/vlc:latest \
+    file:///data/your-video-file.mp4 --sout '#transcode{scodec=none}:rtp{sdp=rtsp://:8554/}'
 ```
 
 ### VLC `sout` References
