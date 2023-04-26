@@ -1,4 +1,4 @@
-FROM fedora:34
+FROM fedora:36
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
@@ -22,9 +22,9 @@ LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>
 RUN groupadd -g "${VLC_GID}" vlc && \
     useradd -m -d /data -s /bin/sh -u "${VLC_UID}" -g "${VLC_GID}" vlc && \
     dnf upgrade -y && \
-    rpm -ivh "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-34.noarch.rpm" && \
+    rpm -ivh "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-36.noarch.rpm" && \
     dnf upgrade -y && \
-    dnf install -y vlc && \
+    dnf install -y vlc ffmpeg && \
     dnf clean all
 
 USER "vlc"
