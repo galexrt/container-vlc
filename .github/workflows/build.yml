@@ -1,10 +1,12 @@
-name: build
+name: Build and Push
+
 on:
   push:
     branches:
       - "main"
     tags:
       - 'v*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,10 +31,10 @@ jobs:
         run: |
           if [[ "${GITHUB_REF}" =~ ^refs/tags/* ]]; then
               # Tags
-              VERSION="${GITHUB_REF/refs\/tags\//}"
+              CONTAINER_IMAGE_TAG="${GITHUB_REF/refs\/tags\//}"
           else
               # Branch
-              VERSION="${GITHUB_REF/refs\/heads\//}"
+              CONTAINER_IMAGE_TAG="${GITHUB_REF/refs\/heads\//}"
           fi
-          
-          make container-build container-push VERSION="${VERSION:-main}"
+
+          make container-crossbuild

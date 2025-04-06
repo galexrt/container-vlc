@@ -1,16 +1,16 @@
 SHELL := /usr/bin/env bash -euo pipefail -c
 .EXPORT_ALL_VARIABLES:
 
-RELEASE_TAG := v$(shell date +%Y%m%d-%H%M%S-%3N)
+CONTAINER_IMAGE_NAME ?= galexrt/container-vlc
+CONTAINER_IMAGE_TAG  ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+CONTAINER_ARCHES ?= linux/amd64,linux/arm64
 
-# Default is the main branch as that is where the "latest" tag should be
-VERSION ?= main
-VERSION_SHORT ?= $(shell cut -d '-' -f 1 <<< "$(VERSION)")
+RELEASE_TAG := v$(shell date +%Y%m%d-%H%M%S-%3N)
 
 ## Create and push a newly generated git tag to trigger a new automated CI run
 release:
 	git tag $(RELEASE_TAG)
-	$(MAKE) container-build container-push VERSION="$(RELEASE_TAG)"
+	$(MAKE) container-crossbuild CONTAINER_IMAGE_TAG="$(RELEASE_TAG)"
 	git push origin $(RELEASE_TAG)
 
 ## Build the container image
@@ -18,20 +18,29 @@ container-build:
 	docker build \
 		--build-arg BUILD_DATE="$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')" \
 		--build-arg VCS_REF="$(shell git rev-parse HEAD)" \
-		-t ghcr.io/galexrt/vlc:$(VERSION) \
+		-t ghcr.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG) \
 		.
-	docker tag ghcr.io/galexrt/vlc:$(VERSION) quay.io/galexrt/vlc:$(VERSION)
-
-	if [ "$(VERSION)" != "$(VERSION_SHORT)" ]; then \
-		docker tag ghcr.io/galexrt/vlc:$(VERSION) ghcr.io/galexrt/vlc:$(VERSION_SHORT); \
-		docker tag ghcr.io/galexrt/vlc:$(VERSION) quay.io/galexrt/vlc:$(VERSION_SHORT); \
-	fi
+	docker tag ghcr.io/$(CONTAINER_IMAGE_NAME):$(VERSION) quay.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)
 
 container-push:
-	docker push ghcr.io/galexrt/vlc:$(VERSION)
-	docker push quay.io/galexrt/vlc:$(VERSION)
+	docker push ghcr.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)
+	docker push quay.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)
 
-	if [ "$(VERSION)" != "$(VERSION_SHORT)" ]; then \
-		docker push ghcr.io/galexrt/vlc:$(VERSION_SHORT); \
-		docker push quay.io/galexrt/vlc:$(VERSION_SHORT); \
+container-crossbuild-prepare:
+	if ! docker buildx ls | grep -q container-builder; then \
+		docker buildx create \
+			--name container-builder \
+			--driver docker-container \
+			--bootstrap --use; \
 	fi
+
+container-crossbuild: container-crossbuild-prepare
+	docker buildx build \
+		--progress=plain \
+		--platform $(CONTAINER_ARCHES) \
+		--build-arg BUILD_DATE="$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+		--build-arg REVISION="$(shell git rev-parse HEAD)" \
+		-t "docker.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)" \
+		-t "ghcr.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)" \
+		--push \
+		.
