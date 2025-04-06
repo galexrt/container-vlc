@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash -euo pipefail -c
 .EXPORT_ALL_VARIABLES:
 
-CONTAINER_IMAGE_NAME ?= galexrt/container-vlc
+CONTAINER_IMAGE_NAME ?= galexrt/vlc
 CONTAINER_IMAGE_TAG  ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
 CONTAINER_ARCHES ?= linux/amd64,linux/arm64
 
