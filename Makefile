@@ -40,7 +40,7 @@ container-crossbuild: container-crossbuild-prepare
 		--platform $(CONTAINER_ARCHES) \
 		--build-arg BUILD_DATE="$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')" \
 		--build-arg REVISION="$(shell git rev-parse HEAD)" \
-		-t "docker.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)" \
 		-t "ghcr.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)" \
+		-t "quay.io/$(CONTAINER_IMAGE_NAME):$(CONTAINER_IMAGE_TAG)" \
 		--push \
 		.
