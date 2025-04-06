@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM docker.io/library/fedora:41
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
@@ -21,8 +21,8 @@ LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>
 
 RUN groupadd -g "${VLC_GID}" vlc && \
     useradd -m -d /data -s /bin/sh -u "${VLC_UID}" -g "${VLC_GID}" vlc && \
-    dnf upgrade -y && \
-    rpm -ivh "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-36.noarch.rpm" && \
+    dnf config-manager setopt fedora-cisco-openh264.enabled=1 && \
+    dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
     dnf upgrade -y && \
     dnf install -y vlc ffmpeg && \
     dnf clean all
