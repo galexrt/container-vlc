@@ -1,4 +1,4 @@
-FROM docker.io/library/fedora:42
+FROM docker.io/library/fedora:44
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
