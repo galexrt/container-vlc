@@ -1,15 +1,16 @@
 # container-vlc
 
-[VLC Media Player](https://www.videolan.org/vlc/) in a Container Image.
+[VLC Media Player](https://www.videolan.org/vlc/) in a Container Image (using Rocky Linux as a base image).
+Installs VLC and ffmpeg from EPEL and RPM Fusion repositories.
 
-Container Image available from:
+**Container Image available from**:
 
 * [Quay.io](https://quay.io/repository/galexrt/vlc)
 * [GHCR.io](https://github.com/users/galexrt/packages/container/package/vlc)
 * [**DEPRECATED** Docker Hub](https://hub.docker.com/r/galexrt/vlc)
   * Docker Hub has been deprecated as of **06.09.2021**!
 
-Container Image Tags:
+**Container Image Tags**:
 
 * `main` - Latest build of the `main` branch.
 * `YYYYmmdd-HHMMSS-NNN` - Latest build of the application with date of the build.

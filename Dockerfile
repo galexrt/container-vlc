@@ -1,4 +1,4 @@
-FROM docker.io/library/fedora:44
+FROM docker.io/library/rockylinux:9.3
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
@@ -21,8 +21,10 @@ LABEL org.opencontainers.image.authors="Alexander Trost <galexrt@googlemail.com>
 
 RUN groupadd -g "${VLC_GID}" vlc && \
     useradd -m -d /data -s /bin/sh -u "${VLC_UID}" -g "${VLC_GID}" vlc && \
-    dnf config-manager setopt fedora-cisco-openh264.enabled=1 && \
-    dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
+    dnf install -y epel-release && \
+    dnf config-manager --set-enabled crb && \
+    dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm && \
+    dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm && \
     dnf upgrade -y && \
     dnf install -y vlc ffmpeg && \
     dnf clean all
