@@ -1,4 +1,4 @@
-FROM docker.io/library/rockylinux:9.3
+FROM docker.io/library/rockylinux:9.9
 
 ARG BUILD_DATE="N/A"
 ARG REVISION="N/A"
